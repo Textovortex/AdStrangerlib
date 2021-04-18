@@ -10,18 +10,18 @@ with open(join(ROOT, "README.md")) as fd:
     README = fd.read()
 
 setup(
-    name='adventurelib',
+    name='adstrangerlib',
     description='Easy text adventures',
     long_description=README,
     long_description_content_type="text/markdown",
     version=__version__,
-    author='Daniel Pope',
-    author_email='mauve@mauveweb.co.uk',
-    url='https://github.com/lordmauve/adventurelib',
+    author='Daniel Pope and LEHAtupointow',
+    author_email='mauve@mauveweb.co.uk/pezleha@gmail.com',
+    url='https://github.com/leha-code/adstrangerlib',
     project_urls={
         'Documentation': 'https://adventurelib.readthedocs.io/'
     },
-    py_modules=['adventurelib'],
+    py_modules=['adstrangerlib'],
     extras_require={
         ':python_version < "3.3"': [
             'backports.shutil_get_terminal_size>=1.0.0',
