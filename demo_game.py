@@ -1,4 +1,4 @@
-from adventurelib import *
+from adstrangerlib import *
 
 Room.items = Bag()
 
@@ -9,10 +9,12 @@ You are in a dark room.
 valley = starting_room.north = Room("""
 You are in a beautiful valley.
 """)
+valley.south = stargin_room
 
 magic_forest = valley.north = Room("""
 You are in a enchanted forest where magic grows wildly.
 """)
+magic_forest.south = valley
 
 mallet = Item('rusty mallet', 'mallet')
 valley.items = Bag({mallet,})
