@@ -17,7 +17,7 @@ except ImportError:
         def get_terminal_size(fallback=(80, 24)):
             return fallback
 
-__version__ = '1.2.1'
+__version__ = '1.0.0'
 __all__ = (
     'when',
     'start',
@@ -180,18 +180,19 @@ class Room:
         return sorted(d for d in self._directions if getattr(self, d))
 
     def __setattr__(self, name, value):
-        if isinstance(value, Room):
-            if name not in self._directions:
-                raise InvalidDirection(
-                    '%r is not a direction you have declared.\n\n' +
-                    'Try calling Room.add_direction(%r, <opposite>) ' % name +
-                    ' where <opposite> is the return direction.'
-                )
-            reverse = self._directions[name]
-            object.__setattr__(self, name, value)
-            object.__setattr__(value, reverse, self)
-        else:
-            object.__setattr__(self, name, value)
+        #if isinstance(value, Room):
+        #    if name not in self._directions:
+        #        raise InvalidDirection(
+        #            '%r is not a direction you have declared.\n\n' +
+        #            'Try calling Room.add_direction(%r, <opposite>) ' % name +
+        #            ' where <opposite> is the return direction.'
+        #        )
+        #    reverse = self._directions[name]
+        #    object.__setattr__(self, name, value)
+        #    object.__setattr__(value, reverse, self)
+        #else:
+        #    object.__setattr__(self, name, value)
+        object.__setattr__(self, name, value) # YEAH, adstrangerlib is made for this. For making complex games
 
 
 Room.add_direction('north', 'south')
