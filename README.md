@@ -1,13 +1,10 @@
-# adventurelib
+# adstrangerlib
 
-[![Build](https://travis-ci.org/lordmauve/adventurelib.svg?branch=master)
-](https://travis-ci.org/lordmauve/adventurelib)
-[![Documentation Status](https://readthedocs.org/projects/adventurelib/badge/?version=latest)](https://adventurelib.readthedocs.io/en/latest/?badge=latest)
 
-`adventurelib` provides basic functionality for writing text-based adventure
-games, with the aim of making it easy enough for young teenagers to do.
+`adstrangerlib` provides basic functionality for writing text-based adventure
+games, with the aim of making hard text adventure games.
 
-The foundation of adventurelib is the ability to define functions that are
+The foundation of adstrangerlib is the ability to define functions that are
 called in response to commands. For example, you could write a function to
 be called when the user types commands like "take hat":
 
@@ -22,12 +19,10 @@ themselves as they explore Python programming concepts.
 
 ## Installing
 
-`adventurelib.py` is a single file that can be copied into your project. You
-can also install it with pip:
+`adstrangerlib.py` is a single file that can be copied into your project.
 
-    pip install adventurelib
+## Differencies from Adventurelib
+adstrangerlib is different from adventurelib, with the ability to have strange passages and confusing directions.
+For example, if you go north from a cave, you get into a forest. If you go back, you get to a town instead.
+Aside from adventurelib's automatic room direction adstrangerlib needs you to declare what is in the back direction of the room.
 
-
-## Documentation
-
-[Comprehensive documentation is on Read The Docs.](http://adventurelib.readthedocs.io/)
