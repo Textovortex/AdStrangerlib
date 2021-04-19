@@ -4,26 +4,26 @@ from io import StringIO
 
 import pytest
 
-import adventurelib
-from adventurelib import Pattern, when, _handle_command, say, Room, Item, Bag
+import adstrangerlib
+from adstrangerlib import Pattern, when, _handle_command, say, Room, Item, Bag
 
-orig_commands = adventurelib.commands[:]
+orig_commands = adstrangerlib.commands[:]
 
 
 @contextmanager
 def active_context(ctx):
     """Context manager to set the current command context."""
-    prev_ctx = adventurelib.current_context
-    adventurelib.set_context(ctx)
+    prev_ctx = adstrangerlib.current_context
+    adstrangerlib.set_context(ctx)
     try:
         yield
     finally:
-        adventurelib.set_context(prev_ctx)
+        adstrangerlib.set_context(prev_ctx)
 
 
 def teardown():
     """Reset the commands."""
-    adventurelib.commands[:] = orig_commands
+    adstrangerlib.commands[:] = orig_commands
 
 
 def test_match():
@@ -125,7 +125,7 @@ def test_register():
         nonlocal called
         called = True
 
-    print(adventurelib.commands)
+    print(adstrangerlib.commands)
     _handle_command('north')
     assert called is True
 
@@ -175,7 +175,7 @@ def test_register_match():
 
 def say_at_width(width, msg):
     buf = StringIO()
-    with patch('adventurelib.get_terminal_size', return_value=(width, 24)):
+    with patch('adstrangerlib.get_terminal_size', return_value=(width, 24)):
         with redirect_stdout(buf):
             say(msg)
     return buf.getvalue()
@@ -303,7 +303,7 @@ def test_bag_find():
 )
 def test_match_context(current_context):
     """We can match contexts."""
-    assert adventurelib._match_context('foo', current_context)
+    assert adstrangerlib._match_context('foo', current_context)
 
 
 @pytest.mark.parametrize(
@@ -312,12 +312,12 @@ def test_match_context(current_context):
 )
 def test_no_match_context(current_context):
     """A context doesn't match if it is not "within" the pattern context."""
-    assert not adventurelib._match_context('foo', current_context)
+    assert not adstrangerlib._match_context('foo', current_context)
 
 
 def test_match_context_none():
     """The current context matches if the pattern context is None."""
-    assert adventurelib._match_context(None, 'foo.bar')
+    assert adstrangerlib._match_context(None, 'foo.bar')
 
 
 @pytest.mark.parametrize(
@@ -326,48 +326,48 @@ def test_match_context_none():
 )
 def test_validate_context(context):
     """We can validate valid contexts."""
-    adventurelib._validate_context(context)
+    adstrangerlib._validate_context(context)
 
 
 def test_validate_context_empty():
     """An empty string is not a valid context."""
     with pytest.raises(ValueError) as exc:
-        adventurelib._validate_context("")
+        adstrangerlib._validate_context("")
     assert str(exc.value) == "Context '' may not be empty"
 
 
 def test_validate_context_start_dot():
     """A context that starts with . is invalid."""
     with pytest.raises(ValueError) as exc:
-        adventurelib._validate_context(".foo")
+        adstrangerlib._validate_context(".foo")
     assert str(exc.value) == "Context '.foo' may not start with ."
 
 
 def test_validate_context_end_dot():
     """A context that ends with . is invalid."""
     with pytest.raises(ValueError) as exc:
-        adventurelib._validate_context("foo.bar.")
+        adstrangerlib._validate_context("foo.bar.")
     assert str(exc.value) == "Context 'foo.bar.' may not end with ."
 
 
 def test_validate_context_double_dot():
     """A context that contains .. is invalid."""
     with pytest.raises(ValueError) as exc:
-        adventurelib._validate_context("foo..bar")
+        adstrangerlib._validate_context("foo..bar")
     assert str(exc.value) == "Context 'foo..bar' may not contain .."
 
 
 def test_validate_context_wrong():
     """A context that is wrong in various ways has a custom message."""
     with pytest.raises(ValueError) as exc:
-        adventurelib._validate_context(".foo.bar.")
+        adstrangerlib._validate_context(".foo.bar.")
     err = str(exc.value)
     assert err == "Context '.foo.bar.' may not start with . or end with ."
 
 
 def test_validate_pattern_double_ident():
     """A pattern with identifier used twice is incorrect"""
-    with pytest.raises(adventurelib.InvalidCommand) as exc:
+    with pytest.raises(adstrangerlib.InvalidCommand) as exc:
         Pattern("take I with I")
     err = str(exc.value)
     assert err == "Invalid command 'take I with I'"\
